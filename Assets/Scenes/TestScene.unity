@@ -215,8 +215,10 @@ GameObject:
   - component: {fileID: 1156405067}
   - component: {fileID: 1156405066}
   - component: {fileID: 1156405065}
-  - component: {fileID: 1156405069}
   - component: {fileID: 1156405068}
+  - component: {fileID: 1156405070}
+  - component: {fileID: 1156405069}
+  - component: {fileID: 1156405071}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -295,9 +297,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1156405064}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff50168fd65966943b056b97c25f9f14, type: 3}
+  m_Script: {fileID: 11500000, guid: ad6e29ac404ef3240b36131181456f48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  combos: []
+  rigidbody: {fileID: 0}
 --- !u!114 &1156405069
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -308,6 +312,34 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 47b5033b9c43ccf49b0ef627e411b27c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  combos: []
+  rigidbody: {fileID: 0}
+--- !u!114 &1156405070
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1156405064}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7693f2828f882d49b67ea0f797c2c9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  combos: []
+  rigidbody: {fileID: 0}
+--- !u!114 &1156405071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1156405064}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da87b7e998ff0974c8775df6c7407f7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1397553153
@@ -354,6 +386,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47b5033b9c43ccf49b0ef627e411b27c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  combos: []
+  rigidbody: {fileID: 0}
 --- !u!212 &1397553156
 SpriteRenderer:
   m_ObjectHideFlags: 0

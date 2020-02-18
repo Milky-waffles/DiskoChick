@@ -2,28 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerScript : PlayerCombo
+public class PlayerInputHandler : Player
 {
-    private Rigidbody2D rigidbody;
     private Vector2 velocity = new Vector2();
-     private Dictionary<int,Inputs> inputMap = new Dictionary<int, Inputs>();
+    private Dictionary<int,Inputs> inputMap = new Dictionary<int, Inputs>();
 
-    
-    void Start()
-    { 
-        rigidbody = GetComponent<Rigidbody2D>();
-        mapInit();
-    }
-
-    
     void Update()
     {
-        string res = HandleInput();
-        
-        if (res.Equals("Jump")){
-            print("Jump");
-            inputMap.Clear();
-        }
+        HandleInput();
         
         if (Input.GetKey(KeyCode.Z)) foreach (var pair in inputMap)
         {
@@ -31,7 +17,6 @@ public class PlayerScript : PlayerCombo
             Inputs value = pair.Value;
             print(key + "/" + value);
         }
-
     }
 
     private string HandleInput(){
@@ -43,7 +28,6 @@ public class PlayerScript : PlayerCombo
     }
 
     private string InputResolver(Inputs input){
-        print(inputMap.Count + 1 + " " + input);
         inputMap.Add(inputMap.Count + 1, input);
         return comboMatcher(inputMap);
     }
