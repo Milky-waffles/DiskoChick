@@ -9,8 +9,9 @@ public class PlayerInputHandler : Player
 
     void Update()
     {
-        HandleInput();
-        
+
+       currentState = HandleInput();
+       
         if (Input.GetKey(KeyCode.Z)) foreach (var pair in inputMap)
         {
             int key = pair.Key;
@@ -19,15 +20,15 @@ public class PlayerInputHandler : Player
         }
     }
 
-    private string HandleInput(){
+    private States HandleInput(){
         if (Input.GetKeyUp(KeyCode.D)) return InputResolver(Inputs.RIGHT);
         if (Input.GetKeyUp(KeyCode.A)) return InputResolver(Inputs.LEFT);
         if (Input.GetKeyUp(KeyCode.S)) return InputResolver(Inputs.DOWN);
         if (Input.GetKeyUp(KeyCode.W)) return InputResolver(Inputs.UP);
-        return "none";
+        return States.NONE;
     }
 
-    private string InputResolver(Inputs input){
+    private States InputResolver(Inputs input){
         inputMap.Add(inputMap.Count + 1, input);
         return comboMatcher(inputMap);
     }

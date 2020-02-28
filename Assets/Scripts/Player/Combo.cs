@@ -1,19 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
-public class Combo : Player
+public class Combo
 {
-    private new string name;
+    private States name;
     private Dictionary<int, Inputs> comboMap; 
 
 
-    public Combo(string name, Dictionary<int, Inputs> comboMap){
+    public Combo(States name, Dictionary<int, Inputs> comboMap){
         this.comboMap = comboMap;
         this.name = name;
     }
 
-     public Combo(string name){
+     public Combo(States name){
         this.name = name;
     }
 
@@ -37,11 +36,11 @@ public class Combo : Player
         return str;
     }
 
-    public string getName(){
+    public States getName(){
         return name;
     }
 
-    public void setName(string name){
+    public void setName(States name){
         this.name = name;
     }
 
