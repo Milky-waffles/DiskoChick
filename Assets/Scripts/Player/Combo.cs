@@ -1,26 +1,26 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-
-public class Combo
+using UnityEngine;
+public class Combo : MonoBehaviour
 {
-    private States name;
-    private Dictionary<int, Inputs> comboMap; 
+    private new Enums.States name;
+    private Dictionary<int, Enums.Inputs> comboMap; 
 
 
-    public Combo(States name, Dictionary<int, Inputs> comboMap){
+    public Combo(Enums.States name, Dictionary<int, Enums.Inputs> comboMap){
         this.comboMap = comboMap;
         this.name = name;
     }
 
-     public Combo(States name){
+     public Combo(Enums.States name){
         this.name = name;
     }
 
-     public Combo(Dictionary<int, Inputs> comboMap){
+     public Combo(Dictionary<int, Enums.Inputs> comboMap){
         this.comboMap = comboMap;
     }
 
-    public bool Compare(Dictionary<int, Inputs> combo){
+    public bool Compare(Dictionary<int, Enums.Inputs> combo){
         if (combo.Count != comboMap.Count) return false;
         foreach(var input in comboMap) if (input.Value != combo[input.Key]) return false;
         return true;
@@ -36,19 +36,19 @@ public class Combo
         return str;
     }
 
-    public States getName(){
+    public Enums.States getName(){
         return name;
     }
 
-    public void setName(States name){
+    public void setName(Enums.States name){
         this.name = name;
     }
 
-    public Dictionary<int, Inputs> getComboMap(){
+    public Dictionary<int, Enums.Inputs> getComboMap(){
         return comboMap;
     }
 
-    public void setComboMap(Dictionary<int, Inputs> comboMap){
+    public void setComboMap(Dictionary<int, Enums.Inputs> comboMap){
         this.comboMap = comboMap;
     }
 }

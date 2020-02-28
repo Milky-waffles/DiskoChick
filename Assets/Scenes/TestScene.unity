@@ -411,12 +411,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7693f2828f882d49b67ea0f797c2c9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  combos: []
-  states: []
-  rigidbody: {fileID: 1173397070}
-  animator: {fileID: 0}
-  currentState: 0
-  name: 0
 --- !u!114 &797503100
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -429,6 +423,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad6e29ac404ef3240b36131181456f48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  combos: []
+  states: []
   rigidbody: {fileID: 1173397070}
   animator: {fileID: 0}
   currentState: 2
@@ -444,6 +440,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47b5033b9c43ccf49b0ef627e411b27c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  combos: []
+  states: []
   rigidbody: {fileID: 1173397070}
   animator: {fileID: 0}
   currentState: 2
@@ -461,6 +459,9 @@ GameObject:
   - component: {fileID: 1173397070}
   - component: {fileID: 1173397074}
   - component: {fileID: 1173397073}
+  - component: {fileID: 1173397075}
+  - component: {fileID: 1173397072}
+  - component: {fileID: 1173397071}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -549,6 +550,30 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &1173397071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1173397066}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7693f2828f882d49b67ea0f797c2c9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1173397072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1173397066}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4d5de1d15b3bce428f47ecfa1ac0461, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1173397073
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -561,6 +586,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47b5033b9c43ccf49b0ef627e411b27c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  combos: []
+  states: []
   rigidbody: {fileID: 1173397070}
   animator: {fileID: 0}
   currentState: 2
@@ -576,6 +603,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad6e29ac404ef3240b36131181456f48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  combos: []
+  states: []
   rigidbody: {fileID: 1173397070}
   animator: {fileID: 0}
   currentState: 2
+--- !u!114 &1173397075
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1173397066}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ddd56861b98fef4c8523cba1f20bbeb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

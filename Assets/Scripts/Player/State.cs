@@ -1,16 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System;
+using UnityEngine;
 
-public class State
+public class State : MonoBehaviour
 {
-    private States name;
+    private Enums.States name;
     private bool entred = true;
     private Action innerLogic = () => {};
     private Action enteredLogic = () => {};
     private Action exitedLogic = () => {};
 
-    public States Name{
+    public Enums.States Name{
         set {name = value;}
         get {return name;}
     }
@@ -27,11 +28,11 @@ public class State
 
     public State(){}
 
-    public State(States name){
+    public State(Enums.States name){
         this.name = name;
     }
 
-    public State(States name, Action enteredLogic, Action innerLogic, Action exitedLogic){
+    public State(Enums.States name, Action enteredLogic, Action innerLogic, Action exitedLogic){
         this.name = name;
         this.enteredLogic = enteredLogic;
         this.innerLogic = innerLogic;

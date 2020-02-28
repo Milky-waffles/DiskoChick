@@ -10,7 +10,7 @@ public class Player : MonoBehaviour
     public List<State> states = new List<State>();
     public new Rigidbody2D rigidbody = null;
     public Animator animator = null;
-    public States currentState = States.NONE;
+    public Enums.States currentState = Enums.States.NONE;
      void Start()
     { 
         rigidbody = GetComponent<Rigidbody2D>();
@@ -18,17 +18,17 @@ public class Player : MonoBehaviour
         InitStates();
         InitCombos();
     }
-    public States comboMatcher(Dictionary<int,Inputs> inputList){
+    public Enums.States comboMatcher(Dictionary<int,Enums.Inputs> inputList){
      foreach (var combo in combos) if (combo.Compare(inputList)) {print(combo.getName()); return combo.getName();}
-     return States.NONE;
+     return Enums.States.NONE;
     }
 
     private void InitStates(){
-        states.Add(new State(States.JUMP,() => {rigidbody.AddForce(Vector2.up * 30);}, ()=>{}, ()=>{}));
-        states.Add(new State(States.WALK,() => {}, ()=>{}, ()=>{}));
+        states.Add(new State(Enums.States.JUMP,() => {rigidbody.AddForce(Vector2.up * 30);}, ()=>{}, ()=>{}));
+        states.Add(new State(Enums.States.WALK,() => {}, ()=>{}, ()=>{}));
     }
     private void InitCombos(){
-        combos.Add(new Combo(States.JUMP, new Dictionary<int, Inputs>(){{1,Inputs.DOWN},{2,Inputs.DOWN},{3,Inputs.UP},{4,Inputs.UP}}));
+        combos.Add(new Combo(Enums.States.JUMP, new Dictionary<int, Enums.Inputs>(){{1,Enums.Inputs.DOWN},{2,Enums.Inputs.DOWN},{3,Enums.Inputs.UP},{4,Enums.Inputs.UP}}));
     }
 
 }
