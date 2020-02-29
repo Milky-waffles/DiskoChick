@@ -25,10 +25,7 @@ public class Player : MonoBehaviour
 
        currentState = HandleInput();
        states.ForEach((x) => {
-           if (x.Name == currentState) {
                x.StateHandler();
-               inputMap.Clear();
-           }
            });
 
        
