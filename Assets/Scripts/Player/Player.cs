@@ -55,10 +55,10 @@ public class Player : MonoBehaviour
         states.Add(Enums.States.JUMP,
             new State(
                 new Dictionary<int, Enums.Inputs>(){{1,Enums.Inputs.DOWN},{2,Enums.Inputs.DOWN},{3,Enums.Inputs.UP},{4,Enums.Inputs.UP}} // Комбо из нужный импутов
-                , () => {rigidbody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);} //Логика, которая вызывается 1 раз при входе в стейт
-                , () => {print("in state");} //Логика, которая вызывается все время нахождения в стейте
-                , () => {print("and out");} //Логика, которая вызывается 1 раз при выходе из стейта
-                , () => {print("im ground"); return isGrounded;})); // Условие выхода из стейта
+                , () => {Debug.Log("entered"); rigidbody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse); isGrounded = false;} //Логика, которая вызывается 1 раз при входе в стейт
+                , () => {Debug.Log("in state");} //Логика, которая вызывается все время нахождения в стейте
+                , () => {Debug.Log("exited");} //Логика, которая вызывается 1 раз при выходе из стейта
+                , () => {Debug.Log("isGrounded = " + isGrounded); return isGrounded;})); // Условие выхода из стейта
     }
     private void HandleInput(){
         if (Input.GetKeyDown(KeyCode.D)) inputMap.Add(inputMap.Count + 1, Enums.Inputs.RIGHT); //Это надо будет переписать, когда придумаю как правильно сделать ввод
