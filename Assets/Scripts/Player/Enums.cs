@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enums : MonoBehaviour
+public class Enums
 {
    public enum States {
         JUMP,
-        WALK,
-        NONE
+        WALK //Это будет пустым стейтом, заглушкой, когда перс ничего не делает
     }
 
      public enum Inputs {

@@ -3,19 +3,20 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 
-public class State : MonoBehaviour
+public class State
 {
-    private Enums.States name;
+    
     private bool entred = true;
     private Action innerLogic = () => {};
     private Action enteredLogic = () => {};
     private Action exitedLogic = () => {};
+    private Func<bool> exitCondition = () => {return false;};
+    private Dictionary<int, Enums.Inputs> combo = new  Dictionary<int, Enums.Inputs>();
 
-    public Enums.States Name{
-        set {name = value;}
-        get {return name;}
+    public Dictionary<int, Enums.Inputs> Combo{
+        set {combo = value;}
+        get {return combo;}
     }
-    
     public Action ExitedLogic{
         set {exitedLogic = value;}
     }
@@ -25,30 +26,34 @@ public class State : MonoBehaviour
     public Action InnerLogic{
         set {innerLogic = value;}
     }
-
     public State(){}
 
-    public State(Enums.States name){
-        this.name = name;
-    }
-
-    public State(Enums.States name, Action enteredLogic, Action innerLogic, Action exitedLogic){
-        this.name = name;
+     public State(Dictionary<int, Enums.Inputs> combo, Action enteredLogic, Action innerLogic, Action exitedLogic, Func<bool> exitCondition){
         this.enteredLogic = enteredLogic;
         this.innerLogic = innerLogic;
         this.exitedLogic = exitedLogic;
+        this.combo = combo;
+        this.exitCondition = exitCondition;
     }
 
-    public void StateHandler(bool exit = false){
-        if (entred){
-            enteredLogic();
-            entred = false;
-        }
-        innerLogic();
-        if (exit){
-            exitedLogic();
-            entred = true;
-        }
+    public bool StateHandler(){
+            if (entred){
+                enteredLogic();
+                entred = false;
+            }
+            innerLogic();
+            if (exitCondition()){
+                exitedLogic();
+                entred = true;
+                return true;
+            } else {
+                return false;
+            } 
     }
- 
+
+    public bool ComboComparator(Dictionary<int, Enums.Inputs> map){
+            if (map.Count != combo.Count && map.Count != 0) return false;
+            foreach (var input in combo) if (input.Value != map[input.Key]) return false;
+            return true; 
+    }
 }

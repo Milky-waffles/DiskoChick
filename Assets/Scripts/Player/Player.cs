@@ -3,63 +3,77 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour
-{     // Крч, если ты это каким-то хреном решила почитать, то смотри, я сделал так, чтобы максимально упросить добавление новых комбо
-     //Все что нужно, вписать инстанс Combo в combos, оно всегда будет матчится с текущим листом, и если они равны, combomatcher вернет, имя твоего комбо, если нет, то none 
-     //Если есть идеи как сделать лучше, то скажи
-    public List<Combo> combos = new List<Combo>();
-    public List<State> states = new List<State>();
-    public new Rigidbody2D rigidbody = null;
-    public Animator animator = null;
-    public Enums.States currentState = Enums.States.NONE;
-    private Vector2 velocity = new Vector2();
+{    //Крч, все перехерачил с нуля, выкинул ненужное дерьмо
+     //Теперь нужен только создать класс State все остальное уже в нем.
+     //P.S. Есть верноятность, что все нахрен перепишу))))
+    public Dictionary<Enums.States,State> states = new Dictionary<Enums.States,State>();
+    public new Rigidbody2D rigidbody;
+    public Animator animator;
+    public (Enums.States, State) currentState = (Enums.States.WALK, new State()); // Плохо, что для начальной инициализации выделаю память под new State() однако пока не нашел, как подругому можно проинициализировать стейт
+                                                                                  // Если кстати не знаешь что такое (Type1, Type2) это называется Tuple можешь почитать что это такое, но вообще не оч сложная штука
     private Dictionary<int,Enums.Inputs> inputMap = new Dictionary<int, Enums.Inputs>();
-     void Start()
-    { 
+    private bool isGrounded = false;
+    private float jumpForce = 5f;
+    private bool allowInput = true;
+    private bool allowToChangeState = true;
+    void Await()
+    {
         rigidbody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        InitStates();
-        InitCombos();
     }
-     void Update()
-    {
+    void Start()
+    { 
+        InitStates();
+    }
+    void Update()
+    {   
+        if (allowInput) HandleInput(); // Самый обычный ввод, если он разрешен, планирую его запрещать во время действия некоторых стейтов, но пока еще не реализовал
+        if (allowToChangeState){ // Эта штука будет работать, когда персонаж находится в каком либо стейте
+            foreach (var state in states) 
+                if (state.Value.Combo.Count == inputMap.Count && state.Value.ComboComparator(inputMap) && state.Key != Enums.States.WALK){
+                    currentState = (state.Key, state.Value); // Сравниваю все стейты с текущим листом вводов, если они совпадают, то присваиваю значение текущему стейту и запрещаю смену стейта
+                    allowToChangeState = false;
+                }
+        } else {
+           allowToChangeState = currentState.Item2.StateHandler(); // Стейт хендлер вернет true, когда сработает условие для смены стейта
+           if (allowToChangeState){
+               currentState = (Enums.States.WALK, states[Enums.States.WALK]); // Возвращаю все в изначальное положение
+               inputMap.Clear();
+            }
+        }
 
-       currentState = HandleInput();
-       states.ForEach((x) => {
-               x.StateHandler();
-           });
+        if (Input.GetKeyDown(KeyCode.Space)) inputMap.Clear();
 
-       
-        if (Input.GetKey(KeyCode.Z)) foreach (var pair in inputMap)
-        {
-            int key = pair.Key;
-            Enums.Inputs value = pair.Value;
-            print(key + "/" + value);
+        if (Input.GetKeyDown(KeyCode.T)) {
+            Debug.Log("isGrounded = " + isGrounded);
+            Debug.Log("allowInput = " + allowInput);
+            Debug.Log("allowToChangeState = " + allowToChangeState);
         }
     }
-    public Enums.States comboMatcher(Dictionary<int,Enums.Inputs> inputList){
-     foreach (var combo in combos) if (combo.Compare(inputList)) {print(combo.getName()); return combo.getName();}
-     return Enums.States.NONE;
-    }
-
     private void InitStates(){
-        states.Add(new State(Enums.States.JUMP,() => {rigidbody.AddForce(Vector2.up * 30);}, ()=>{}, ()=>{}));
-        states.Add(new State(Enums.States.WALK,() => {}, ()=>{}, ()=>{}));
+        states.Add(Enums.States.WALK, new State());
+        states.Add(Enums.States.JUMP,
+            new State(
+                new Dictionary<int, Enums.Inputs>(){{1,Enums.Inputs.DOWN},{2,Enums.Inputs.DOWN},{3,Enums.Inputs.UP},{4,Enums.Inputs.UP}} // Комбо из нужный импутов
+                , () => {Debug.Log("entered"); rigidbody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse); isGrounded = false;} //Логика, которая вызывается 1 раз при входе в стейт
+                , () => {Debug.Log("in state");} //Логика, которая вызывается все время нахождения в стейте
+                , () => {Debug.Log("exited");} //Логика, которая вызывается 1 раз при выходе из стейта
+                , () => {Debug.Log("isGrounded = " + isGrounded); return isGrounded;})); // Условие выхода из стейта
     }
-    private void InitCombos(){
-        combos.Add(new Combo(Enums.States.JUMP, new Dictionary<int, Enums.Inputs>(){{1,Enums.Inputs.DOWN},{2,Enums.Inputs.DOWN},{3,Enums.Inputs.UP},{4,Enums.Inputs.UP}}));
+    private void HandleInput(){
+        if (Input.GetKeyDown(KeyCode.D)) inputMap.Add(inputMap.Count + 1, Enums.Inputs.RIGHT); //Это надо будет переписать, когда придумаю как правильно сделать ввод
+        if (Input.GetKeyDown(KeyCode.A)) inputMap.Add(inputMap.Count + 1, Enums.Inputs.LEFT);
+        if (Input.GetKeyDown(KeyCode.S)) inputMap.Add(inputMap.Count + 1, Enums.Inputs.DOWN);
+        if (Input.GetKeyDown(KeyCode.W)) inputMap.Add(inputMap.Count + 1, Enums.Inputs.UP);
     }
-
-    private Enums.States HandleInput(){
-        if (Input.GetKeyUp(KeyCode.D)) return InputResolver(Enums.Inputs.RIGHT);
-        if (Input.GetKeyUp(KeyCode.A)) return InputResolver(Enums.Inputs.LEFT);
-        if (Input.GetKeyUp(KeyCode.S)) return InputResolver(Enums.Inputs.DOWN);
-        if (Input.GetKeyUp(KeyCode.W)) return InputResolver(Enums.Inputs.UP);
-        return Enums.States.NONE;
+     void OnCollisionEnter2D(Collision2D col){ // ну тут вроде понятно
+        if (col.gameObject.tag == "Ground"){
+            isGrounded = true;
+        }
     }
-
-    private Enums.States InputResolver(Enums.Inputs input){
-        inputMap.Add(inputMap.Count + 1, input);
-        return comboMatcher(inputMap);
+    void OnCollisionExit2D(Collision2D col){
+        if (col.gameObject.tag == "Ground"){
+            isGrounded = false;
+        }
     }
-
 }
